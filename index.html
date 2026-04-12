@@ -212,15 +212,19 @@
         '장': ['장난기 넘치는 귀여운 모습', '장면마다 화보 같은 비주얼', '장거리 비행도 잊게 만드는 설렘', '장담컨대 넌 최고의 스타야']
     };
 
+    const defaultIdols = ['장원영', '카리나', '하니', '안유진', '윈터', '설윤', '사쿠라', '민지', '김채원', '예지', '해린', '다니엘', '닝닝', '지젤', '레이', '가을', '이서', '리즈'];
+
     function generateSamhaengsi() {
         const nameInput = document.getElementById('nameInput');
         const resultDiv = document.getElementById('result');
         
         let name = nameInput.value.trim();
 
+        // 이름이 입력되지 않았을 경우 랜덤으로 하나 선택
         if (!name) {
-            alert('이름을 입력해주세요!');
-            return;
+            const randomIdx = Math.floor(Math.random() * defaultIdols.length);
+            name = defaultIdols[randomIdx];
+            nameInput.value = name; // 입력창에도 표시
         }
 
         resultDiv.innerHTML = '';

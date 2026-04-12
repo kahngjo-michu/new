@@ -3,26 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K-Pop Idol Samhaengsi | 아이돌 삼행시</title>
+    <title>삼행시 마스터 | Samhaengsi Master</title>
     <style>
         :root {
-            --primary-color: #ff85a2;
-            --secondary-color: #fce4ec;
-            --accent-color: #ff4081;
-            --text-color: #444;
-            --bg-color: #fff9fb;
+            --primary-color: #1a237e;
+            --accent-color: #3f51b5;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #212121;
+            --text-sub: #757575;
+            --border-color: #e0e0e0;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -30,264 +32,272 @@
             padding: 20px;
         }
 
-        .container {
-            max-width: 500px;
+        .app-container {
+            max-width: 480px;
             width: 100%;
-            background: white;
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(255, 133, 162, 0.2);
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             text-align: center;
         }
 
-        h1 {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            letter-spacing: -1px;
-        }
-
-        p.subtitle {
-            font-size: 0.9rem;
-            color: #888;
+        .header {
             margin-bottom: 30px;
         }
 
-        .input-group {
-            margin-bottom: 20px;
+        .header h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+        }
+
+        .input-section {
+            margin-bottom: 25px;
         }
 
         input {
             width: 100%;
-            padding: 15px;
-            border: 2px solid var(--secondary-color);
-            border-radius: 15px;
+            padding: 16px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             font-size: 1rem;
             outline: none;
-            transition: border-color 0.3s;
-            margin-bottom: 10px;
+            transition: all 0.2s;
+            background-color: #fff;
         }
 
         input:focus {
-            border-color: var(--primary-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.1);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
         }
 
         button {
-            width: 100%;
-            padding: 15px;
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
             background-color: var(--primary-color);
             color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 133, 162, 0.4);
         }
 
-        button:hover {
+        .btn-primary:hover {
             background-color: var(--accent-color);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
 
-        button:active {
-            transform: translateY(0);
+        .btn-copy {
+            background-color: #f1f3f4;
+            color: var(--text-main);
+            display: none; /* 결과가 있을 때만 표시 */
         }
 
-        #result {
+        .btn-copy:hover {
+            background-color: #e8eaed;
+        }
+
+        #result-area {
             margin-top: 40px;
-            min-height: 150px;
             text-align: left;
         }
 
-        .line {
-            margin-bottom: 15px;
-            opacity: 0;
-            transform: translateX(-20px);
-            transition: all 0.5s ease-out;
+        .poem-card {
+            padding: 24px;
+            background-color: #fafafa;
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-color);
+            display: none;
+            animation: slideUp 0.4s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .poem-line {
+            margin-bottom: 16px;
             display: flex;
-            align-items: flex-start;
+            align-items: center;
         }
 
-        .line.show {
-            opacity: 1;
-            transform: translateX(0);
+        .poem-line:last-child {
+            margin-bottom: 0;
         }
 
-        .initial {
+        .initial-box {
+            width: 36px;
+            height: 36px;
             background-color: var(--primary-color);
             color: white;
-            width: 35px;
-            height: 35px;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-right: 15px;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            margin-right: 16px;
             flex-shrink: 0;
         }
 
-        .content {
-            font-size: 1.1rem;
-            line-height: 35px;
+        .content-text {
+            font-size: 1.05rem;
             color: #333;
             font-weight: 500;
+            line-height: 1.5;
         }
 
         .footer {
-            margin-top: 30px;
+            margin-top: 40px;
             font-size: 0.8rem;
-            color: #ccc;
+            color: #bdc3c7;
         }
 
-        @media (max-width: 400px) {
-            .container { padding: 25px; }
-            h1 { font-size: 1.6rem; }
+        /* Toast UI */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            display: none;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🎀 아이돌 삼행시</h1>
-    <p class="subtitle">버튼을 누를 때마다 새로운 아이돌이 등장해요!</p>
-
-    <div class="input-group">
-        <input type="text" id="nameInput" placeholder="아이돌 이름을 입력하거나 버튼을 누르세요">
+<div class="app-container">
+    <div class="header">
+        <h1>SAMHAENGSI</h1>
+        <p>당신의 소중한 이름으로 따뜻한 삼행시를 만듭니다.</p>
     </div>
 
-    <button onclick="generateSamhaengsi()">삼행시 생성하기 ✨</button>
+    <div class="input-section">
+        <input type="text" id="nameInput" placeholder="이름을 입력하세요 (예: 김철수)" maxlength="10">
+    </div>
 
-    <div id="result"></div>
+    <div class="btn-group">
+        <button class="btn-primary" onclick="generatePoem()">삼행시 생성 ✨</button>
+        <button id="copyBtn" class="btn-copy" onclick="copyToClipboard()">복사하기 📋</button>
+    </div>
+
+    <div id="result-area">
+        <div id="poemCard" class="poem-card">
+            <!-- 결과가 들어올 곳 -->
+        </div>
+    </div>
 
     <div class="footer">
-        © 2026 Idol Samhaengsi Maker
+        © 2026 Samhaengsi Master. All rights reserved.
     </div>
 </div>
 
+<div id="toast">복사되었습니다!</div>
+
 <script>
-    const randomPhrases = {
-        '가': ['가장 눈부시게 빛나는 별', '가슴 속 깊이 간직하고 싶은 너', '가까이서 보면 더 아름다운 미소'],
-        '나': ['나의 하루를 행복하게 만드는 사람', '나를 웃게 만드는 마법 같은 존재', '나른한 오후의 햇살처럼 따뜻한 너'],
-        '다': ['다시 태어나도 너의 팬이 될게', '다정한 네 목소리에 위로를 받아', '다채로운 매력으로 무대를 채우는 너'],
-        '라': ['라일락 향기처럼 은은하게 퍼지는 매력', '라이브 무대 위의 넌 정말 완벽해', '라디오에서 들려오는 네 목소리가 좋아'],
-        '마': ['마음 속 깊이 너를 응원하고 있어', '마지막까지 함께 걷고 싶은 스타', '마법처럼 사람들을 홀리는 매력'],
-        '바': ['바라만 봐도 입가에 미소가 번져', '바람처럼 시원한 너의 춤선에 반했어', '바다처럼 깊은 눈동자에 빠져들어'],
-        '사': ['사랑할 수밖에 없는 너의 모든 것', '사뿐사뿐 걷는 발걸음마저 우아해', '사실 널 처음 본 순간부터 팬이었어'],
-        '아': ['아름다움이라는 단어는 널 위해 존재해', '아침 햇살보다 더 상큼한 너의 에너지', '아낌없이 사랑을 주고 싶은 나의 원픽'],
-        '자': ['자기만의 색깔이 뚜렷해서 더 빛나', '자꾸만 보고 싶어지는 마법 같은 얼굴', '자연스럽게 무대를 즐기는 모습이 멋져'],
-        '차': ['차원이 다른 퍼포먼스로 세상을 놀라게 해', '차가운 공기마저 따뜻하게 녹이는 미소', '차분하면서도 단단한 네 마음이 느껴져'],
-        '카': ['카메라를 압도하는 독보적인 아우라', '카리스마 넘치는 눈빛 뒤에 숨겨진 귀여움', '카타르시스를 느끼게 하는 완벽한 무대'],
-        '타': ['타의 추종을 불허하는 압도적인 실력', '타이밍 좋게 나타나준 나의 소중한 스타', '타오르는 열정으로 꿈을 향해 달리는 너'],
-        '파': ['파란 하늘처럼 맑고 깨끗한 영혼', '파워풀한 에너지로 무대를 장악하는 힘', '파도처럼 밀려오는 감동적인 네 목소리'],
-        '하': ['하루 종일 너의 노래만 듣고 싶어', '하늘이 내려준 가장 소중한 선물', '하이라이트를 장식하는 빛나는 주인공'],
-        '미': ['미소가 정말 예뻐서 자꾸 보게 돼', '미래가 더 기대되는 빛나는 가능성', '미로처럼 빠져나올 수 없는 너의 매력'],
-        '추': ['추억 속에서 영원히 간직될 이름', '추위도 잊게 만드는 뜨거운 무대 열정', '추천해주고 싶은 단 하나의 소중한 스타'],
-        '원': ['원하는 모든 꿈이 다 이뤄지길 바라', '원픽은 언제나 고민 없이 바로 너야', '원더풀한 실력으로 세상을 놀라게 해'],
-        '영': ['영원히 변치 않는 마음으로 응원할게', '영혼을 울리는 네 감성적인 목소리', '영광스러운 순간을 함께 나누고 싶어'],
-        '윤': ['윤기 나는 너의 머릿결과 맑은 눈망울', '윤슬처럼 반짝이는 너의 꿈을 응원해', '윤곽마저 예술 작품 같은 완벽한 비주얼'],
-        '지': ['지금 이 순간 가장 빛나는 별은 너야', '지치지 말고 너의 길을 당당히 가길', '지구상에서 가장 소중한 나의 아이돌'],
-        '현': ['현실 세계에 강림한 아름다운 여신', '현재의 노력들이 더 큰 빛이 될 거야', '현장 분위기를 한순간에 압도하는 포스'],
-        '희': ['희망과 용기를 주는 너의 밝은 미소', '희귀한 보석처럼 소중하게 다루고 싶어', '희열을 느끼게 하는 소름 돋는 가창력'],
-        '채': ['채워지지 않는 팬심을 너로 가득 채워', '채색된 꿈처럼 아름다운 너의 퍼포먼스', '채널을 돌릴 수 없게 만드는 치명적 매력'],
-        '안': ['안구 정화 제대로 시켜주는 명품 비주얼', '안정적인 가창력으로 무대를 꽉 채워', '안아주고 싶을 만큼 소중하고 귀한 사람'],
-        '유': ['유니크한 너만의 스타일이 정말 좋아', '유독 눈에 띄는 압도적인 존재감', '유능함까지 겸비한 준비된 만능 스타'],
-        '진': ['진심을 다하는 너의 모습에 감동했어', '진정한 프로다운 무대 매너에 반했어', '진한 여운이 남는 너만의 특별한 감성'],
-        '설': ['설레는 마음으로 너의 컴백을 기다려', '설명할 필요 없는 압도적인 미모', '설탕처럼 달콤한 네 목소리에 빠졌어'],
-        '민': ['민트향처럼 상큼하고 청량한 매력', '민낯까지 완벽해서 더 놀라운 비주얼', '민첩한 동작으로 완성하는 예술적 안무'],
-        '예': ['예사롭지 않은 분위기를 풍기는 너', '예쁜 마음씨까지 가졌다는 걸 알아', '예술적인 감각으로 무대를 창조하는 너'],
-        '사': ['사뿐사뿐 걷는 모습도 정말 사랑스러워', '사이다처럼 시원한 고음에 가슴이 뻥 뚫려', '사시사철 변함없이 너만 바라볼게'],
-        '쿠': ['쿠키처럼 달콤하고 자꾸 생각나는 너', '쿠션처럼 편안함을 주는 네 따뜻한 말들'],
-        '라': ['라이트하게 즐기려다 인생을 바쳤어', '라인이 살아있는 완벽한 안무에 감탄해', '라이징 스타를 넘어 전설이 될 너'],
-        '장': ['장면 장면이 다 화보 같은 독보적 비주얼', '장거리 비행의 피로도 잊게 만드는 설렘', '장담컨대 넌 역대 최고의 아이돌이야'],
-        '민': ['민심을 사로잡은 압도적인 국민 아이돌', '민들레처럼 강인하고 아름다운 생명력'],
-        '혜': ['혜성처럼 나타나 가요계를 뒤흔든 너', '혜안을 가진 소속사가 발견한 최고의 보석'],
-        '리': ['리드미컬한 움직임에 눈을 뗄 수 없어', '리더십 넘치는 모습이 정말 든든해'],
-        '서': ['서정적인 멜로디와 어우러지는 네 목소리', '서슴지 않고 꿈을 향해 나가는 용기'],
-        '수': ['수많은 사람 중에서도 단연 돋보여', '수줍게 웃는 모습이 너무나 귀여워'],
-        '은': ['은하수처럼 영롱하게 빛나는 너의 눈', '은근하게 스며드는 너만의 독특한 매력'],
-        '소': ['소중한 너의 꿈이 꼭 이뤄지길 기도해', '소녀 같은 순수함과 성숙한 매력의 공존'],
-        '연': ['연기하듯 몰입하는 너의 무대 표현력', '연습생 시절의 노력이 빛을 발하는 순간'],
-        '지': ['지혜롭고 영리하게 무대를 즐기는 너', '지독하게 매력적인 너에게서 못 헤어나와'],
-        '주': ['주인공은 언제나 너라는 걸 잊지 마', '주말의 피로를 날려버리는 너의 비주얼'],
-        '해': ['해맑은 웃음소리가 온 세상을 밝혀', '해질녘 노을처럼 신비롭고 아름다운 너'],
-        '린': ['린넨 셔츠처럼 깔끔하고 산뜻한 이미지', '린(인)형보다 더 인형 같은 완벽한 미모'],
-        '다': ['다시 봐도 넌 정말 완벽한 스타야', '다정한 배려심에 또 한 번 입덕해'],
-        '니': ['니(너)의 존재 자체가 나에겐 큰 힘이야', '니(너)를 알게 된 건 내 생애 최고의 행운'],
-        '엘': ['엘리트 같은 지적인 매력까지 갖췄어', '엘레강스한 분위기로 무대를 압도해'],
-        '닝': ['닝닝한 일상에 자극이 되는 너의 존재'],
-        '젤': ['젤리처럼 탱글탱글하고 귀여운 너'],
-        '레': ['레전드 무대를 매번 갱신하는 실력', '레드 카펫 위에서 가장 빛나는 여신'],
-        '이': ['이 세상 무엇보다 소중한 나의 스타', '이유 없이 그냥 네가 너무 좋아'],
-        '가': ['가을 햇살처럼 부드럽고 따뜻한 너', '가식 없는 솔직한 모습이 정말 매력적이야'],
-        '을': ['을(을)지로 감성마저 소화하는 트렌드세터'],
-        '이': ['이토록 완벽한 사람이 존재할 수 있다니', '이슬처럼 맑고 깨끗한 너의 이미지'],
-        '서': ['서로가 서로에게 힘이 되는 팬과 스타', '서늘한 매력과 따뜻한 미소의 공조'],
-        '리': ['리듬에 몸을 맡긴 너의 모습은 예술이야', '리플레이를 멈출 수 없는 너의 직캠'],
-        '즈': ['즈(즈음)에 다시 생각나는 너의 데뷔 무대']
+    const database = {
+        '가': ['가장 소중한 당신의 꿈을 응원합니다', '가슴 속 깊이 간직한 열정을 깨워보세요', '가까이서 보면 더 빛나는 당신입니다', '가을 햇살처럼 따스한 미소를 가진 사람', '가식 없는 당신의 솔직함이 좋습니다'],
+        '나': ['나의 하루를 밝혀주는 당신의 존재', '나를 믿고 앞으로 나아가는 용기', '나른한 일상에 활력을 불어넣어 줄게요', '나만의 색깔로 세상을 칠해보세요', '나눌수록 커지는 행복을 실천하는 분'],
+        '다': ['다시 시작할 수 있는 힘은 내 안에 있습니다', '다정한 말 한마디가 세상을 바꿉니다', '다채로운 매력으로 가득한 당신', '다 비워내고 새로움을 채울 시간입니다', '다시는 오지 않을 오늘을 소중히 여겨요'],
+        '라': ['라일락 향기처럼 은은하게 퍼지는 매력', '라인업을 화려하게 장식할 주인공', '라디오에서 흘러나오는 노래 같은 편안함', '라이브처럼 생동감 넘치는 당신의 삶', '라라라 즐겁게 노래하며 걸어가요'],
+        '마': ['마음 속 깊이 평화가 깃들기를 바랍니다', '마지막까지 포기하지 않는 당신이 멋집니다', '마법처럼 좋은 일만 일어날 거예요', '마주보는 눈빛에서 진심이 느껴져요', '마음껏 웃을 수 있는 오늘이 되길'],
+        '바': ['바라만 봐도 기분이 좋아지는 사람', '바람처럼 시원한 당신의 성격이 좋아요', '바다처럼 넓은 마음을 가진 당신', '바보처럼 착한 당신의 진심을 압니다', '바삐 움직이는 세상 속 쉼표가 되어줄게요'],
+        '사': ['사랑 가득한 눈으로 세상을 바라보세요', '사실 당신은 누구보다 특별한 사람입니다', '사소한 행복이 모여 큰 기쁨이 됩니다', '사계절 내내 변함없는 마음으로 응원해요', '사뿐사뿐 당신의 꿈을 향해 걸어가세요'],
+        '아': ['아름다운 미래가 당신을 기다리고 있습니다', '아침 햇살처럼 눈부신 당신의 가능성', '아낌없이 주는 나무처럼 따뜻한 마음', '아주 작은 시작이 위대한 결과를 만듭니다', '아름다움은 당신의 내면에서 시작됩니다'],
+        '자': ['자기 자신을 누구보다 사랑해주세요', '자신감 넘치는 당신의 모습이 아름답습니다', '자연스럽게 흘러가는 시간 속의 여유', '자꾸만 보고 싶어지는 매력적인 사람', '자유로운 영혼으로 세상을 누벼보세요'],
+        '차': ['차분하게 생각하고 단단하게 행동하세요', '차가운 세상을 녹이는 따뜻한 미소', '차별화된 당신만의 능력을 보여주세요', '차곡차곡 쌓아온 노력이 결실을 맺을 거예요', '차 한 잔의 여유를 즐기는 오늘이 되길'],
+        '카': ['카메라 렌즈에 담고 싶은 아름다운 순간', '카리스마 넘치는 당신의 결단력', '카페라떼처럼 부드러운 당신의 목소리', '카운트다운이 시작된 당신의 성공', '카타르시스를 느끼는 최고의 무대'],
+        '타': ['타인을 배려하는 당신의 마음이 고귀합니다', '타이밍 좋게 나타난 당신은 행운입니다', '타오르는 불꽃처럼 뜨거운 당신의 열정', '타의 추종을 불허하는 독보적인 실력', '타인과 소통하며 함께 성장해나가요'],
+        '파': ['파란 하늘처럼 맑은 영혼을 가진 당신', '파워풀한 에너지로 세상을 깨워주세요', '파도처럼 밀려오는 감동을 선사하는 사람', '파스텔톤 꿈을 현실로 만드는 능력', '파이팅 넘치는 당신의 오늘을 응원합니다'],
+        '하': ['하늘 아래 가장 소중한 보물은 당신입니다', '하루하루 성장하는 당신의 모습이 기대돼요', '하얀 도화지에 당신의 꿈을 그려보세요', '하하하 크게 웃으며 행복을 만끽하세요', '하이라이트를 장식할 인생의 주인공은 당신']
     };
 
-    const defaultIdols = [
-        '장원영', '안유진', '레이', '가을', '리즈', '이서', 
-        '카리나', '윈터', '닝닝', '지젤', 
-        '하니', '민지', '해린', '다니엘', '혜인', 
-        '김채원', '사쿠라', '허윤진', '카즈하', '홍은채',
-        '나연', '정연', '모모', '사나', '지효', '미나', '다현', '채영', '쯔위',
-        '제니', '지수', '로제', '리사',
-        '아이린', '슬기', '웬디', '조이', '예리',
-        '미연', '민니', '소연', '우기', '슈화',
-        '설윤', '해원', '릴리', '배이', '지우', '규진',
-        '예지', '리아', '류진', '채령', '유나',
-        '권은비', '최예나', '강혜원', '조유리', '김민주', '이채연', '김채원', '안유진', '장원영', '사쿠라', '야부키나코', '혼다히토미',
-        '태연', '윤아', '유리', '효연', '써니', '수영', '티파니', '서현',
-        '나띠', '벨', '쥬리', '하늘',
-        '심자윤', '박시은', '배수민', '윤세은', '이채영', '장예은',
-        '박지원', '노지선', '이새롬', '이채영', '이나경', '송하영', '이서연', '백지헌',
-        '전소미', '청하', '현아', '선미', '아이유', '청하', '화사', '휘인', '문별', '솔라'
-    ];
+    function generatePoem() {
+        const input = document.getElementById('nameInput');
+        const card = document.getElementById('poemCard');
+        const copyBtn = document.getElementById('copyBtn');
+        const name = input.value.trim();
 
-    function generateSamhaengsi() {
-        const nameInput = document.getElementById('nameInput');
-        const resultDiv = document.getElementById('result');
-        let name = nameInput.value.trim();
-        
-        // 입력창이 비어있을 경우에만 랜덤 아이돌 선택
         if (!name) {
-            const randomIdx = Math.floor(Math.random() * defaultIdols.length);
-            name = defaultIdols[randomIdx];
-            nameInput.value = name;
+            alert('이름을 입력해주세요!');
+            return;
         }
-        
-        resultDiv.innerHTML = '';
-        let poem = [];
 
+        let html = '';
         for (let char of name) {
-            const phrases = randomPhrases[char] || [
-                `${char}상한 매력을 가진 사람`, 
-                `${char}음에도 잊지 못할 이름`,
-                `${char}곡하게 널 기다려왔어`,
-                `${char}명히 넌 빛나는 별이 될 거야`
-            ];
-            // 글자별 문구 리스트에서 매번 랜덤하게 선택
-            const randomIdx = Math.floor(Math.random() * phrases.length);
-            poem.push(phrases[randomIdx]);
+            const phrases = database[char] || [`${char}상한 매력을 가진 당신입니다`, `${char}음에도 잊지 못할 소중한 이름`, `${char}곡하게 당신의 앞날을 응원합니다`, `${char}명히 멋진 일이 생길 거예요`];
+            const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+            
+            html += `
+                <div class="poem-line">
+                    <div class="initial-box">${char}</div>
+                    <div class="content-text">${randomPhrase}</div>
+                </div>
+            `;
         }
 
-        poem.forEach((content, index) => {
-            const line = document.createElement('div');
-            line.className = 'line';
-            line.innerHTML = `
-                <div class="initial">${name[index]}</div>
-                <div class="content">${content}</div>
-            `;
-            resultDiv.appendChild(line);
-            void line.offsetWidth;
-            setTimeout(() => { line.classList.add('show'); }, index * 400);
+        card.innerHTML = html;
+        card.style.display = 'block';
+        copyBtn.style.display = 'block';
+        
+        // 애니메이션 재시작을 위해 클래스 제거 후 다시 추가
+        card.style.animation = 'none';
+        card.offsetHeight; /* trigger reflow */
+        card.style.animation = null;
+    }
+
+    function copyToClipboard() {
+        const card = document.getElementById('poemCard');
+        const lines = card.querySelectorAll('.poem-line');
+        let text = "";
+        
+        lines.forEach(line => {
+            const initial = line.querySelector('.initial-box').innerText;
+            const content = line.querySelector('.content-text').innerText;
+            text += `${initial}: ${content}\n`;
+        });
+
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
         });
     }
+
+    // 엔터키 지원
+    document.getElementById('nameInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            generatePoem();
+        }
+    });
+
+    // 시작 시 포커스
+    window.onload = () => document.getElementById('nameInput').focus();
 </script>
+
 </body>
 </html>

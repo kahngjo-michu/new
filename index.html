@@ -218,14 +218,15 @@
         const nameInput = document.getElementById('nameInput');
         const resultDiv = document.getElementById('result');
         
-        let name = nameInput.value.trim();
-
-        // 이름이 입력되지 않았을 경우 랜덤으로 하나 선택
-        if (!name) {
-            const randomIdx = Math.floor(Math.random() * defaultIdols.length);
-            name = defaultIdols[randomIdx];
-            nameInput.value = name; // 입력창에도 표시
-        }
+        const currentName = nameInput.value.trim();
+        
+        // 현재 이름과 다른 아이돌들 중에서 랜덤 선택
+        const availableIdols = defaultIdols.filter(idol => idol !== currentName);
+        const randomIdx = Math.floor(Math.random() * availableIdols.length);
+        const name = availableIdols[randomIdx];
+        
+        // 선택된 이름을 입력창에 반영
+        nameInput.value = name;
 
         resultDiv.innerHTML = '';
         let poem = [];

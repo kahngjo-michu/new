@@ -1,1 +1,291 @@
-<h1>안녕</h1>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Pop Idol Samhaengsi | 아이돌 삼행시</title>
+    <style>
+        :root {
+            --primary-color: #ff85a2;
+            --secondary-color: #fce4ec;
+            --accent-color: #ff4081;
+            --text-color: #444;
+            --bg-color: #fff9fb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 133, 162, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        p.subtitle {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 15px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            margin-bottom: 10px;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--primary-color);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 133, 162, 0.4);
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #result {
+            margin-top: 40px;
+            min-height: 150px;
+            text-align: left;
+        }
+
+        .line {
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease-out;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .line.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .initial {
+            background-color: var(--primary-color);
+            color: white;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .content {
+            font-size: 1.1rem;
+            line-height: 35px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #ccc;
+        }
+
+        /* Responsive */
+        @media (max-width: 400px) {
+            .container {
+                padding: 25px;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎀 아이돌 삼행시</h1>
+    <p class="subtitle">내가 좋아하는 아이돌 이름으로 삼행시를 지어봐요!</p>
+
+    <div class="input-group">
+        <select id="idolSelect" onchange="toggleCustomInput()">
+            <option value="">아이돌 선택하기</option>
+            <option value="장원영">장원영 (IVE)</option>
+            <option value="카리나">카리나 (aespa)</option>
+            <option value="하니">하니 (NewJeans)</option>
+            <option value="안유진">안유진 (IVE)</option>
+            <option value="윈터">윈터 (aespa)</option>
+            <option value="설윤">설윤 (NMIXX)</option>
+            <option value="사쿠라">사쿠라 (LE SSERAFIM)</option>
+            <option value="민지">민지 (NewJeans)</option>
+            <option value="김채원">김채원 (LE SSERAFIM)</option>
+            <option value="예지">예지 (ITZY)</option>
+            <option value="custom">직접 입력하기</option>
+        </select>
+        <input type="text" id="customInput" placeholder="이름을 입력하세요 (예: 미추)" style="display: none;">
+    </div>
+
+    <button onclick="generateSamhaengsi()">삼행시 생성하기 ✨</button>
+
+    <div id="result">
+        <!-- 결과가 여기에 표시됩니다 -->
+    </div>
+
+    <div class="footer">
+        © 2026 Idol Samhaengsi Maker
+    </div>
+</div>
+
+<script>
+    const samhaengsiData = {
+        "장원영": ["장난 아니게 예쁜 외모", "원탑 비주얼 갓기", "영원히 우리들의 워너비"],
+        "카리나": ["카리스마 넘치는 무대 위 모습", "리얼리티에선 귀여운 반전 매력", "나의 마음속 1순위 아이돌"],
+        "하니": ["하늘에서 내려온 천사가 아닐까", "니(너)의 웃음은 세상을 밝혀줘"],
+        "안유진": ["안구 정화 제대로 시켜주는 비주얼", "유능함까지 겸비한 만능 리더", "진심으로 널 응원해"],
+        "윈터": ["윈터가 무대에서 웃을 때면", "터무니없이 심장이 두근거려"],
+        "설윤": ["설명할 필요도 없는 완벽한 미모", "윤기 나는 머릿결까지 완벽해"],
+        "사쿠라": ["사뿐사뿐 춤추는 모습에 반했어", "쿠라의 끊임없는 노력에 감동해", "라일락처럼 아름다운 그녀"],
+        "민지": ["민낯까지 예쁜 청순의 대명사", "지금 이 순간 가장 빛나는 별"],
+        "김채원": ["김이 모락모락 나는 따뜻한 미소", "채고(최고)의 리더 쌈무 대장", "원하는 건 다 들어주고 싶어"],
+        "예지": ["예사롭지 않은 춤선과 눈빛", "지금껏 본 적 없는 최고의 리더"]
+    };
+
+    const randomPhrases = {
+        '가': ['가장 빛나는 사람', '가슴이 두근거려'],
+        '나': ['나의 소중한 아이돌', '나를 웃게 만드는 너'],
+        '다': ['다시 태어나도 팬이 될게', '다정한 너의 목소리'],
+        '라': ['라벤더 향기 같은 그녀', '라디오에서 들리는 네 목소리'],
+        '마': ['마음이 따뜻한 사람', '마지막까지 함께할게'],
+        '바': ['바라만 봐도 행복해', '바람처럼 시원한 춤선'],
+        '사': ['사랑할 수밖에 없는 매력', '사실 널 정말 좋아해'],
+        '아': ['아름다움의 결정체', '아낌없이 주고 싶은 마음'],
+        '자': ['자기만의 색깔이 뚜렷해', '자꾸만 생각나는 얼굴'],
+        '차': ['차원이 다른 퍼포먼스', '차가운 세상을 녹이는 미소'],
+        '카': ['카메라를 압도하는 눈빛', '카페라떼처럼 부드러운 목소리'],
+        '타': ['타의 추종을 불허하는 실력', '타이밍 좋게 나타난 나의 스타'],
+        '파': ['파란 하늘처럼 맑은 너', '파워풀한 무대 매너'],
+        '하': ['하루 종일 너만 생각해', '하늘이 내려준 선물'],
+        '미': ['미소가 정말 예쁜 그녀', '미래가 기대되는 스타'],
+        '추': ['추억을 함께 만들고 싶어', '추위도 잊게 만드는 열정'],
+        '원': ['원하는 건 뭐든 해주고파', '원픽은 언제나 너야'],
+        '영': ['영원히 기억될 이름', '영혼을 울리는 목소리'],
+        '윤': ['윤기 나는 너의 꿈을 응원해', '윤슬처럼 빛나는 눈동자'],
+        '지': ['지금 이 순간 가장 소중해', '지치지 말고 화이팅!'],
+        '현': ['현실 세계에 강림한 여신', '현재 진행형인 너의 성장'],
+        '희': ['희망을 주는 너의 존재', '희귀한 보석 같은 사람'],
+        '채': ['채워지지 않는 팬심', '채색된 꿈처럼 아름다워']
+    };
+
+    function toggleCustomInput() {
+        const select = document.getElementById('idolSelect');
+        const customInput = document.getElementById('customInput');
+        if (select.value === 'custom') {
+            customInput.style.display = 'block';
+        } else {
+            customInput.style.display = 'none';
+        }
+    }
+
+    function generateSamhaengsi() {
+        const select = document.getElementById('idolSelect');
+        const customInput = document.getElementById('customInput');
+        const resultDiv = document.getElementById('result');
+        
+        let name = '';
+        if (select.value === 'custom') {
+            name = customInput.value.trim();
+        } else {
+            name = select.value;
+        }
+
+        if (!name) {
+            alert('이름을 선택하거나 입력해주세요!');
+            return;
+        }
+
+        resultDiv.innerHTML = '';
+        let poem = [];
+
+        if (samhaengsiData[name]) {
+            poem = samhaengsiData[name];
+        } else {
+            // 랜덤 생성 로직
+            for (let char of name) {
+                const phrases = randomPhrases[char] || [`${char}상한 매력을 가진 사람`, `${char}음에도 잊지 못할 이름`];
+                const randomIdx = Math.floor(Math.random() * phrases.length);
+                poem.push(phrases[randomIdx]);
+            }
+        }
+
+        // 출력 애니메이션
+        poem.forEach((content, index) => {
+            const line = document.createElement('div');
+            line.className = 'line';
+            line.innerHTML = `
+                <div class="initial">${name[index]}</div>
+                <div class="content">${content}</div>
+            `;
+            resultDiv.appendChild(line);
+
+            setTimeout(() => {
+                line.classList.add('show');
+            }, index * 400);
+        });
+    }
+</script>
+
+</body>
+</html>

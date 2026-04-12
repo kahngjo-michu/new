@@ -252,13 +252,15 @@
     function generateSamhaengsi() {
         const nameInput = document.getElementById('nameInput');
         const resultDiv = document.getElementById('result');
-        const currentName = nameInput.value.trim();
+        let name = nameInput.value.trim();
         
-        const availableIdols = defaultIdols.filter(idol => idol !== currentName);
-        const randomIdx = Math.floor(Math.random() * availableIdols.length);
-        const name = availableIdols[randomIdx];
+        // 입력창이 비어있을 경우에만 랜덤 아이돌 선택
+        if (!name) {
+            const randomIdx = Math.floor(Math.random() * defaultIdols.length);
+            name = defaultIdols[randomIdx];
+            nameInput.value = name;
+        }
         
-        nameInput.value = name;
         resultDiv.innerHTML = '';
         let poem = [];
 
@@ -269,6 +271,7 @@
                 `${char}곡하게 널 기다려왔어`,
                 `${char}명히 넌 빛나는 별이 될 거야`
             ];
+            // 글자별 문구 리스트에서 매번 랜덤하게 선택
             const randomIdx = Math.floor(Math.random() * phrases.length);
             poem.push(phrases[randomIdx]);
         }

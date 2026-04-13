@@ -1,0 +1,201 @@
+const database = {
+    '가': {
+        start: ['가장 먼저 떠오르는 소중한 사람', '가슴 속에 품어온 따뜻한 진심', '가을 햇살처럼 포근한 당신의 미소'],
+        middle: ['가까이서 지켜보는 것만으로도 충분한', '가볍게 산책하며 오늘 하루를 정리하고', '가늠할 수 없는 당신의 열정을 응원해요'],
+        end: ['가장 행복한 순간이 당신과 함께하길', '가뿐하게 오늘 하루도 잘 마무리에요', '가슴 벅찬 감동이 일상에 가득하기를']
+    },
+    '나': {
+        start: ['나른한 오후의 햇살 같은 따스함', '나만 알고 싶은 숨은 보석 같은 당신', '나 오늘 좀 괜찮은데? 싶은 그런 날'],
+        middle: ['나를 설레게 하는 당신의 깜짝 선물', '나란히 앉아 도란도란 이야기 나누고픈', '나날이 발전하는 당신의 모습이 멋져요'],
+        end: ['나날이 더 좋은 사람으로 성장할 당신', '나란히 서서 같은 곳을 바라보는 우리', '나중에 돌아봐도 미소 지을 오늘이길']
+    },
+    '다': {
+        start: ['다 잘될 거예요, 걱정은 잠시 접어둬요', '다채로운 일상의 조각들이 모여지는 오늘', '다정한 말투에 사르르 녹아버리는 마음'],
+        middle: ['다시 생각해도 당신은 정말 좋은 사람', '다채로운 매력으로 주변을 물들이는', '다정함이 배어있는 행동에 감동받아요'],
+        end: ['다 이루어질 거예요, 당신의 간절한 꿈', '다시는 오지 않을 소중한 찰나를 즐기세요', '다 함께 웃으며 행복한 추억을 남기길']
+    },
+    '라': {
+        start: ['라떼 한 잔의 여유가 필요한 시간', '라디오에서 최애곡이 흘러나올 때의 기분'],
+        middle: ['라인업을 화려하게 장식할 오늘의 주인공', '라벨을 떼지 않은 새 옷처럼 설레는'],
+        end: ['라라라 콧노래가 절로 나오는 하루 되길', '라이징 스타보다 더 반짝이는 당신입니다']
+    },
+    '마': {
+        start: ['마음 속에 저장하고 싶은 오늘의 풍경', '마법처럼 기분 좋은 일이 생길 것 같아요'],
+        middle: ['마주 앉아 도란도란 이야기 나누고 싶은', '마음이 따뜻해지는 코코아 한 잔의 위로'],
+        end: ['마침내 빛을 발할 당신의 노력을 믿어요', '마음 부자가 되는 넉넉한 하루 보내세요']
+    },
+    '바': {
+        start: ['바쁜 일상 속에서도 잃지 않는 유머', '바람 소리가 기분 좋게 귓가를 스칠 때'],
+        middle: ['바삐 움직이는 세상 속 나만의 속도로', '바르게 행동하려 노력하는 당신의 마음'],
+        end: ['바라는 모든 일이 착착 이뤄질 거예요', '바닥난 에너지도 풀충전되는 하루 되길']
+    },
+    '사': {
+        start: ['사랑 가득한 하트 뿅뿅 에너지를 보내요', '사실 당신은 존재 자체로 완벽한 사람'],
+        middle: ['사계절 내내 보고 싶은 최애 같은 사람', '사려 깊은 행동에 모두가 감동받아요'],
+        end: ['사뿐사뿐 당신의 앞날에 꽃길만 펼쳐지길', '사라지지 않을 기분 좋은 여운을 남겨주세요']
+    },
+    '아': {
+        start: ['아침에 눈 떴을 때 컨디션 최상인 날', '아이스 아메리카노 한 잔의 수혈처럼'],
+        middle: ['아주 작은 것에서도 감사함을 찾아내는', '아름다운 풍경 속에 당신이 있어 완벽한'],
+        end: ['아름다운 오늘을 멋지게 기록해봐요', '아침이 올 때까지 푹 잘 자요, 굿나잇']
+    },
+    '자': {
+        start: ['자꾸만 손이 가는 새우깡 같은 매력', '자신감 뿜뿜! 오늘은 내가 주인공'],
+        middle: ['자유롭게 날개를 펴고 하고 싶은 거 다 해', '자랑하고 싶은 당신의 업무 능력과 센스'],
+        end: ['자랑스러운 나의 친구, 언제나 당신 편이야', '자고 일어나면 더 좋은 일이 생길 거예요']
+    },
+    '차': {
+        start: ['차분하게 차 한 잔 마시며 힐링 타임', '차원이 다른 센스에 감탄이 절로 나와요'],
+        middle: ['차세대 리더로서의 자질이 충분한 당신', '차분한 목소리로 전하는 진심 어린 위로'],
+        end: ['차세대 인싸는 바로 당신입니다, 화이팅', '차원이 다른 행복을 선물해 줄게요']
+    },
+    '카': {
+        start: ['카톡 소리에 심장이 바운스 설레는 아침', '카메라 렌즈를 압도하는 당신의 비주얼'],
+        middle: ['카운트다운 시작! 당신의 시대가 옵니다', '카페라떼처럼 부드럽고 포근한 목소리'],
+        end: ['카타르시스를 느끼게 해줄 당신의 성공', '카톡 답장 기다리는 설렘으로 가득한 밤']
+    },
+    '타': {
+        start: ['타이밍 좋게 신호등이 초록불일 때의 기쁨', '타인보다 나 자신을 먼저 사랑하는 연습'],
+        middle: ['타임머신 타고 미래로 가도 당신이 최고', '타인에게 선한 영향력을 주는 아름다운 삶'],
+        end: ['타인에게 꼭 필요한 사람이 되어 빛나네요', '타오르는 불꽃처럼 화려한 결실을 맺길']
+    },
+    '파': {
+        start: ['파란 하늘 보며 기분 전환하기 좋은 날', '파티 타임! 오늘 밤 주인공은 나야 나'],
+        middle: ['파이팅 넘치는 당신의 앞날을 응원합니다', '파스텔톤 꿈을 현실로 만들어가는 노력'],
+        end: ['파란 하늘만큼이나 넓고 깊은 당신의 꿈', '파도처럼 부서져도 다시 일어날 당신의 저력']
+    },
+    '하': {
+        start: ['하늘이 내린 최고의 선물은 바로 당신', '하루 종일 뒹굴뒹굴하고 싶은 토요일'],
+        middle: ['하루하루 성장하는 당신의 모습이 멋져요', '하이파이브하며 성공을 축하할 날을 위해'],
+        end: ['하하하 웃음소리가 끊이지 않는 행복한 집', '하늘 위 별처럼 영원히 반짝이는 스타 되길']
+    },
+    '김': {
+        start: ['김이 모락모락 나는 밥처럼 포근한 사람', '김밥 속에 꽉 찬 재료처럼 알찬 매력'],
+        middle: ['기분 좋은 에너지가 뿜뿜 솟아나게 하는', '기억 속에 오래도록 남을 소중한 인연'],
+        end: ['깊은 밤 밤하늘의 별처럼 빛나는 당신 되길', '기적 같은 일이 당신의 일상에 매일 일어날 거예요']
+    },
+    '이': {
+        start: ['이 세상 텐션이 아닌 역대급 텐션의 소유자', '이거 실화냐? 싶을 정도로 완벽한 당신'],
+        middle: ['이슬처럼 맑고 깨끗한 마음씨를 가진 사람', '이렇게 좋은 날 당신과 함께라 행복합니다'],
+        end: ['이토록 사랑스러운 당신의 앞날을 축복해요', '이루어질 거예요, 당신이 간절히 소망하던 일']
+    }
+};
+
+function generatePoem() {
+    const input = document.getElementById('nameInput');
+    const card = document.getElementById('poemCard');
+    const copyBtn = document.getElementById('copyBtn');
+    const name = input.value.trim();
+
+    if (!name) {
+        alert('이름을 입력해주세요!');
+        return;
+    }
+
+    let html = '';
+    const len = name.length;
+
+    for (let i = 0; i < len; i++) {
+        const char = name[i];
+        
+        const funnyFallbacks = {
+            start: [
+                `${char}랄라라... 갑자기 춤추는 냉장고를 본 적 있나요?`,
+                `${char}큼한 레몬을 먹고 얼굴이 구겨진 고양이처럼`,
+                `${char}치 마켓에서 산 신비로운 항아리 속에서`,
+                `${char}라라! 외치며 화장실로 달려가는 뒷모습`,
+                `${char}기지개 켜다 허리에 담 걸린 할아버지의 심정으로`
+            ],
+            middle: [
+                `${char}우우... 늑대 소리를 내며 편의점으로 들어가는`,
+                `${char}파리... 아니 와이파이를 찾아 지붕 위를 헤매는`,
+                `${char}루 종일 비둘기랑 대화하며 빵 부스러기를 나누는`,
+                `${char}신감 넘치게 신발을 거꾸로 신고 출근하는`,
+                `${char}꾸만 콧구멍에 손이 가는 마성의 중독성으로`
+            ],
+            end: [
+                `${char}말 황당해서 말이 안 나오는 이 상황을 즐겨봐요`,
+                `${char}일은 꼭 정신 차리고 살아야겠다고 다짐합니다`,
+                `${char}분하게 미역국에 밥 말아 먹고 푹 자려 합니다`,
+                `${char}렁탕 국물을 원샷하고 포효하는 당신이 주인공`,
+                `${char}상한 사람 아니에요, 그냥 좀 참신할 뿐입니다`
+            ]
+        };
+
+        let type = 'middle';
+        if (i === 0) type = 'start';
+        else if (i === len - 1) type = 'end';
+
+        let phrases;
+        if (database[char] && database[char][type]) {
+            phrases = database[char][type];
+        } else {
+            phrases = funnyFallbacks[type];
+        }
+
+        const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+        
+        html += `
+            <div class="poem-line">
+                <div class="initial-box">${char}</div>
+                <div class="content-text">${randomPhrase}</div>
+            </div>
+        `;
+    }
+
+    card.innerHTML = html;
+    card.style.display = 'block';
+    copyBtn.style.display = 'block';
+    
+    card.style.animation = 'none';
+    card.offsetHeight; 
+    card.style.animation = null;
+}
+
+function copyToClipboard() {
+    const card = document.getElementById('poemCard');
+    const lines = card.querySelectorAll('.poem-line');
+    if (lines.length === 0) return;
+
+    let text = "";
+    lines.forEach(line => {
+        const initial = line.querySelector('.initial-box').innerText;
+        const content = line.querySelector('.content-text').innerText;
+        text += `${initial}: ${content}\n`;
+    });
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => { showToast(); });
+    } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try { document.execCommand('copy'); showToast(); } catch (err) {}
+        document.body.removeChild(textArea);
+    }
+}
+
+function showToast() {
+    const toast = document.getElementById('toast');
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 2000);
+}
+
+function toggleForm() {
+    const form = document.getElementById('partnership-form');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    if (form.style.display === 'block') {
+        form.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const nameInput = document.getElementById('nameInput');
+    if (nameInput) {
+        nameInput.focus();
+        nameInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') generatePoem();
+        });
+    }
+});
